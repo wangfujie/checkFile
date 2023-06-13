@@ -1,0 +1,17 @@
+.idea
+.settings
+target
+*.iml
+*.drawio.bkp
+
+**/.settings
+**/target
+**/*.iml
+**/.classpath
+**/.projectlogs
+**/*.log
+**/*.zip
+**/*.pdf
+**/*.gz
+**/*.jpg
+**/*.docx
