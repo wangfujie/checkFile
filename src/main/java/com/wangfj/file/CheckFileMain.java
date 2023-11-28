@@ -24,9 +24,9 @@ public class CheckFileMain {
     public static ExecutorService executorService = ThreadUtil.newExecutor(16);
 
     public static void main(String[] args) {
-        String filePath = "D:\\Downloads\\赛博朋克2077\\S156\\S156_v1.61";
-        String md5FileName = "S156_v1.61.md5";
-        List<Future> futureList = new ArrayList<>();
+        String filePath = "D:\\Downloads\\轮回修仙路";
+        String md5FileName = "L1006_Build.10062462_1.0_12.02.md5";
+        List<Future<?>> futureList = new ArrayList<>();
         AtomicInteger numAtomicInt = new AtomicInteger(0);
         try (RandomAccessFile accessFile = new RandomAccessFile(FileUtil.newFile(filePath + FileUtil.FILE_SEPARATOR + md5FileName), "r")){
             String lineStr = "";
@@ -34,7 +34,7 @@ public class CheckFileMain {
                 lineStr = FileUtil.readLine(accessFile, Charset.defaultCharset());
                 if (StrUtil.isNotEmpty(lineStr)){
                     final String[] contents = lineStr.split(" ");
-                    Future taskFuture = executorService.submit(() -> {
+                    Future<?> taskFuture = executorService.submit(() -> {
                         int fileNum = numAtomicInt.getAndIncrement();
                         String fileMd5 = contents[0];
                         String fileName = contents[1].replace("*", "");
@@ -50,7 +50,7 @@ public class CheckFileMain {
                 }
             }while (StrUtil.isNotEmpty(lineStr));
             System.out.println("总条数：" + numAtomicInt.get() + " 线程数：" + futureList.size());
-            for (Future taskFuture : futureList){
+            for (Future<?> taskFuture : futureList){
                 taskFuture.get();
             }
             System.out.println("执行完成--------------------");
